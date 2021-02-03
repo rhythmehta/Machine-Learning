@@ -22,7 +22,7 @@ trainLabels = digits.target[np.where(np.logical_or(digits.target == 2 , digits.t
 #data preprocessing
 n = len(trainImages)
 X = trainImages.reshape((n, -1)) #image as its own list
-y = trainLabels.reshape((n, -1)) #
+y = trainLabels.reshape((n, -1)) #image class label
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
