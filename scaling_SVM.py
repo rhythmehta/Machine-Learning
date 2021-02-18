@@ -13,7 +13,7 @@ from sklearn.metrics import accuracy_score
 from sklearn import svm
 import pandas as pd
 
-def getdata(n):
+def getdata(n): #generate random data for two class labels
     class_plus = np.random.normal(loc=1,scale=2,size=n)
     class_minus = np.random.normal(loc=2,scale=4,size=n)
     label_plus, label_minus = [],[]
@@ -30,7 +30,7 @@ def getdata(n):
     
     return(data)
 
-def fitData(num):
+def fitData(num): #fit support vector classifier with RBF kernel
     data = getdata(num)
     X = data[['Points']]
     y = data[['Label']]
@@ -39,14 +39,14 @@ def fitData(num):
     clf.fit(X,y)
     return clf
 
-def pred(clf,num):
+def pred(clf,num): #predict on fitted model
     data = getdata(num)
     X = np.ravel(data[["Points"]])
     X = X.reshape(-1, 1)
     y_pred = clf.predict(X)
     return y_pred
 
-def accuracy(clf, num):
+def accuracy(clf, num): #compute prediction accuracy
     data = getdata(num)
     X,y = data[["Points"]], data[["Label"]]
     y,X = np.ravel(y), np.ravel(X)
@@ -54,7 +54,7 @@ def accuracy(clf, num):
     y_pred = clf.predict(X)
     return accuracy_score(y, y_pred)
 
-for i in [100, 1000, 10000]:
+for i in [100, 1000, 10000]: #for 3 sets of n data points, compare time taken to fit and predict, and accuracy of prediction
     print("SVM:", i, "data points\n")
     clf = fitData(i)
     %timeit fitData(i)
@@ -62,14 +62,17 @@ for i in [100, 1000, 10000]:
     print(accuracy(clf, 1000)) #metric
 
 ### OUTPUT
+
 #SVM: 100 data points
 #3.02 ms ± 39.3 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 #6.4 ms ± 304 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 #0.662
+
 #SVM: 1000 data points
 #153 ms ± 4.2 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 #41.9 ms ± 4.54 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 #0.6625
+
 #SVM: 10000 data points
 #25.9 s ± 2.94 s per loop (mean ± std. dev. of 7 runs, 1 loop each)
 #503 ms ± 47 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
